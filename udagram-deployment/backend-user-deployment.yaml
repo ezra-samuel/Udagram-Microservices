@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-user
+spec:
+  selector:
+    matchLabels:
+      run: backend-user
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: backend-user
+    spec:
+      containers:
+        - name: backend-user
+          image: ezraone/udagram-api-user:v4
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: 1000m
+              memory: "128Mi"
+            requests:
+              cpu: 500m
+              memory: "64Mi"
+          env:
+            - name: POSTGRES_USERNAME
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "ezraone3"
+            - name: POSTGRES_HOST
+              value: "database3.c3f1nxdy8pwb.us-east-1.rds.amazonaws.com"
+            - name: POSTGRES_DB
+              value: "postgres"
