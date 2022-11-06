@@ -2,11 +2,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend-feed
+  labels:
+    app: udagram-api-feed
 spec:
   selector:
     matchLabels:
       run: backend-feed
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -14,7 +16,7 @@ spec:
     spec:
       containers:
         - name: backend-feed
-          image: ezraone/udagram-api-feed:v4
+          image: ezraone/udagram-api-feed:latest
           ports:
             - containerPort: 80
           resources:
@@ -23,12 +25,25 @@ spec:
               memory: "128Mi"
             requests:
               cpu: 500m
+              memory: "64Mi"
           env:
             - name: POSTGRES_USERNAME
-              value: "ezraone"
+              valueFrom:
+                secretKeyRef:
+                  name: env-secret
+                  key: POSTGRES_USERNAME
             - name: POSTGRES_PASSWORD
-              value: "ezraone3"
+              valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: env-secret
             - name: POSTGRES_HOST
-              value: "database3.c3f1nxdy8pwb.us-east-1.rds.amazonaws.com"
+              valueFrom:
+                configMapKeyRef:
+                  key: PSTGRES_HOST
+                  name: env-configmap
             - name: POSTGRES_DB
-              value: "postgres"
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_DB
+                  name: env-configmap

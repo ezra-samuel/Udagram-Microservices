@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       run: reverseproxy
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: reverseproxy
-          image: ezraone/udagram-reverseproxy:v4
+          image: ezraone/reverseproxy
           ports:
             - containerPort: 80
           resources:
