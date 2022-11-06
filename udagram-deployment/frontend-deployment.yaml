@@ -14,13 +14,13 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ezraone/udagram-frontend:latest
+          image: ezraone/udagram-frontend:v9
           ports:
             - containerPort: 80
           resources:
             limits:
-              memory: "128Mi"
-              cpu: 500m
+              memory: "1024Mi"
+              cpu: "500"
             requests:
-              memory: "64Mi"
-              cpu: 200m
+              memory: "128Mi"
+              cpu: "250"
